@@ -1,3 +1,11 @@
 .rcw-conversation-container {
   max-width: 100% !important;
 }
+
+.typing-indicator {
+  max-height: 33px;
+}
+
+.rcw-message-text {
+  max-width: 80% !important;
+}
