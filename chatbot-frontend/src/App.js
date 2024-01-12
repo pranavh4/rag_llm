@@ -32,7 +32,7 @@ function App() {
                 showChat={true}
                 emojis={true}
                 title="FinBot"
-                subtitle="Chatbot for Financial Analysts powered by LLMs and Retrieveal Augmented Generation"
+                subtitle="Chatbot for Financial Analysts powered by LLMs and Retrieval Augmented Generation"
                 handleNewUserMessage={handleNewUserMessage}
             />
         </div>

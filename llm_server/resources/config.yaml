@@ -1,4 +1,4 @@
-openai_api_key: "<your-api-key"
+openai_api_key: "<your-api-key>"
 
 retrieval_classifier:
   prompt_template: |
@@ -17,3 +17,6 @@ retrieval_classifier:
     Query: {}
     Response: {}
     Answer:
+
+scraper:
+  num_articles: 5

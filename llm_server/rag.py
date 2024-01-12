@@ -22,19 +22,25 @@ class RetrievalClassifier:
     def requires_retrieval(self, query: str, response: str) -> bool:
         prompt = self.prompt_template.format(query, response)
         response = str(self.chat_engine.chat(prompt))
-        print(response)
         return not response.lower().startswith("yes")
 
 
 class RagLLM:
+    """
+    Large Language Model powered by Information Retrieval from ft.com to add further context
+    """
+
     def __init__(self, retrieval_classifier: RetrievalClassifier):
         self.retrieval_classifier = retrieval_classifier
         self.index: VectorStoreIndex = VectorStoreIndex.from_documents([])
-        self.chat_history: list[ChatMessage] = []
-        self.retriever = self.index.as_retriever()
+        self.chat_history: list[ChatMessage] = []  # Used to maintain context about a user's conversation with the LLM
         self.chat_engine = self._create_chat_engine()
 
     def update_index(self, query: str):
+        """
+        Scrape articles from ft.com for the given query and update the local document index
+        """
+
         articles = get_articles(query)
 
         for article in articles:
@@ -43,11 +49,18 @@ class RagLLM:
         self.chat_engine = self._create_chat_engine()
 
     def get_response(self, query: str) -> str:
-        response_txt = str(self.chat_engine.chat(query))
-        print(response_txt)
+        """
+        Generate LLM response given a user query
+        """
 
+        print("Generating response from LLM")
+        response_txt = str(self.chat_engine.chat(query))
+
+        # Ask the LLM if the generated response indicated that the LLM needs more context and retrieve documents if so
         if self.retrieval_classifier.requires_retrieval(query, response_txt):
+            print("LLM needs more context. Scraping data")
             self.update_index(query)
+            print("Generating new response with scraped data as context")
             response_txt = str(self.chat_engine.chat(query))
 
         user_message = ChatMessage(
