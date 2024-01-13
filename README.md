@@ -11,7 +11,7 @@ You can refer this [link](https://help.openai.com/en/articles/4936850-where-do-i
 - Ensure you have docker installed. The code was tested on Docker version 24.0.7
 - Once you have updated the config.yaml file with your api key, build a docker image using the following commands. Change the image-name as per you requirements
 ```shell
-cd /path/to/repository/
+cd /path/to/repository/ # Ensure you are in the directory which has the Dockerfile
 docker build -f Dockerfile -t <image-name> .
 ```
 - Once the build is complete, run the below command to start a container which will serve the application on port 5000
@@ -27,17 +27,17 @@ docker run -p 5000:5000 <image-name>
 - Create and activate a python [virtualenv](https://docs.python.org/3/library/venv.html) if required 
 - Install the required libraries
 ```shell
-cd /path/to/repository
+cd /path/to/repository # Ensure you are in the directory which has the requirements.txt
 pip install -r requirements.txt
 ```
 - Create an optimized production build of the React frontend, which will be served by flask
 ```shell
-cd /path/to/repository/chatbot-frontend
+cd /path/to/repository/chatbot-frontend # Ensure you are in the directory which has the package.json
 npm install
 npm run build
 ```
 - Run the flask application
 ```shell
-cd /path/to/repository
+cd /path/to/repository # Ensure you are in the directory which has the requirements.txt
 flask --app llm_server run --debug
 ```
