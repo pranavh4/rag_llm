@@ -18,10 +18,20 @@ function App() {
                 "Content-Type": "application/json",
             },
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status > 299 || res.status < 200) {
+                    return {"status": "failure"}
+                }
+
+                return res.json()
+            })
             .then(data => {
-                  deleteMessages(1)
-                  addResponseMessage(data.response || '')
+                deleteMessages(1)
+                if (data.status === "failure") {
+                    alert("Server Error")
+                } else {
+                    addResponseMessage(data.response || '')
+                }
             })
     };
 
@@ -40,8 +50,8 @@ function App() {
 }
 
 const typingIndicator = () => {
-   return (
-      <img className="typing-indicator" src="/typing-animation-3x.gif" alt='Typing...' />
-   )
+    return (
+        <img className="typing-indicator" src="/typing-animation-3x.gif" alt='Typing...'/>
+    )
 }
 export default App;
