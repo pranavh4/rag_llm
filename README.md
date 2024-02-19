@@ -1,5 +1,5 @@
 # FinBot
-Chatbot for Financial Analysts powered by LLMs and Retrieval Augmented Generation
+Chatbot for Financial Analysts powered by LLMs and Retrieval Augmented Generation.<br>
 
 ## How to Run
 The project can be run either as a docker container or directly via the terminal.
